@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>我的英语音标学习站</title>
+
+<style>
+
+body{
+    font-family: Arial,"Microsoft YaHei";
+    background:#f5f7fb;
+    margin:0;
+}
+
+header{
+    background:#2563eb;
+    color:white;
+    padding:25px;
+    text-align:center;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.menu button{
+    padding:10px 20px;
+    margin:5px;
+    border:none;
+    background:#3b82f6;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+
+.card{
+
+    background:white;
+    margin:15px 0;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px #ddd;
+
+}
+
+
+.symbol{
+
+    font-size:45px;
+    color:#2563eb;
+}
+
+
+.word{
+
+    font-size:20px;
+    margin:10px;
+
+}
+
+
+audio{
+
+    width:100%;
+
+}
+
+
+.quiz{
+
+    background:#fff7ed;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>我的英语音标学习站</h1>
+
+<p>IPA Phonetic Learning</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+<div class="menu">
+
+<button onclick="show('vowel')">
+元音
+</button>
+
+<button onclick="show('consonant')">
+辅音
+</button>
+
+<button onclick="quiz()">
+测试
+</button>
+
+</div>
+
+
+
+<div id="content"></div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+const ipa={
+
+
+vowel:[
+
+{
+symbol:"iː",
+example:"see",
+meaning:"长元音",
+audio:""
+},
+
+{
+symbol:"ɪ",
+example:"sit",
+meaning:"短元音",
+audio:""
+},
+
+{
+symbol:"æ",
+example:"cat",
+meaning:"梅花音",
+audio:""
+},
+
+
+{
+symbol:"ʌ",
+example:"cup",
+meaning:"短啊音",
+audio:""
+},
+
+{
+symbol:"ɑː",
+example:"car",
+meaning:"长啊音",
+audio:""
+}
+
+
+],
+
+
+consonant:[
+
+
+{
+symbol:"p",
+example:"pen",
+meaning:"爆破音",
+audio:""
+},
+
+{
+symbol:"b",
+example:"book",
+meaning:"浊辅音",
+audio:""
+},
+
+
+{
+symbol:"t",
+example:"tea",
+meaning:"爆破音",
+audio:""
+},
+
+
+{
+symbol:"θ",
+example:"think",
+meaning:"咬舌音",
+audio:""
+},
+
+
+{
+symbol:"ʃ",
+example:"she",
+meaning:"sh音",
+audio:""
+}
+
+
+]
+
+
+};
+
+
+
+function show(type){
+
+
+let html="";
+
+
+ipa[type].forEach((item,index)=>{
+
+
+html+=`
+
+<div class="card">
+
+
+<div class="symbol">
+${item.symbol}
+</div>
+
+
+<div class="word">
+
+例词：
+<b>${item.example}</b>
+
+</div>
+
+
+<p>
+
+说明：
+${item.meaning}
+
+</p>
+
+
+<button onclick="learn('${item.symbol}')">
+
+记住
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+document.getElementById("content").innerHTML=html;
+
+
+}
+
+
+
+function learn(word){
+
+
+let old=
+JSON.parse(localStorage.getItem("learned")||"[]");
+
+
+if(!old.includes(word))
+{
+old.push(word);
+}
+
+
+localStorage.setItem(
+"learned",
+JSON.stringify(old)
+);
+
+
+alert(
+"已学习："+word
+);
+
+
+}
+
+
+
+function quiz(){
+
+
+let list=[
+...ipa.vowel,
+...ipa.consonant
+];
+
+
+let item=
+list[
+Math.floor(
+Math.random()*list.length
+)
+];
+
+
+document.getElementById("content").innerHTML=`
+
+<div class="card quiz">
+
+<h2>
+测试
+</h2>
+
+
+<p>
+这个音标是什么？
+</p>
+
+
+<div class="symbol">
+
+${item.symbol}
+
+</div>
+
+
+<p>
+请输入例词：
+</p>
+
+
+<input id="answer">
+
+
+<button onclick="
+check('${item.example}')
+">
+提交
+</button>
+
+
+</div>
+
+
+`;
+
+}
+
+
+
+function check(answer){
+
+
+let user=
+document.getElementById("answer").value;
+
+
+if(user.toLowerCase()
+==answer.toLowerCase())
+{
+
+alert("正确");
+
+}
+else{
+
+alert(
+"答案："+answer
+);
+
+}
+
+
+}
+
+
+
+show("vowel");
+
+
+</script>
+
+
+</body>
+
+</html>
