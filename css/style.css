@@ -1,1 +1,17 @@
+@font-face{
+
+font-family:IPA;
+
+src:url("../assets/fonts/DoulosSIL-Regular.ttf");
+
+}
+
+
+.ipa{
+
+font-family:IPA;
+
+font-size:70px;
+
+}
 
